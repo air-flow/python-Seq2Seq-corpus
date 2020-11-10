@@ -2,7 +2,7 @@ import MeCab
 import pprint
 import re
 path = 'C:\\Users\\kiryu\\Desktop\\tuji\\textdata\\nucc\\'
-file = path+'test.txt'
+file = path+'data001.txt'
 def DataText(path):
     result_list = []
     with open(file,"r",encoding="utf-8") as f:
@@ -44,7 +44,8 @@ def DeleteTextOpesion(text):
 
 def MeCabWakatigaki(text):
     m = MeCab.Tagger("-Owakati")
-    return m.parse(text).rstrip("\n")
+    # return m.parse(text).rstrip("\n")
+    return m.parse(text)
 
 
 def NameDelete(text):
@@ -68,13 +69,14 @@ def WriteTextInFile(data):
     mecab_data = list(map(MeCabWakatigaki,data))
     # even,odd = AlternateListChange(mecab_data)
     # output_list = ["input","output"]
+    # すべての文が発話文であり、かつ応答文であると解釈する
     input_text = mecab_data[0:-1]
     output_text = mecab_data[1:]
-    pprint.pprint(input_text)
-    pprint.pprint(output_text)
-    # with open(path+"", mode='w') as f:
-    #     f.writelines()
-
+    with open(path+"..//seq2seqtext\\input\\input.txt", mode='w',encoding='utf-8') as f:
+        f.writelines(input_text)
+    with open(path+"..//seq2seqtext\\output\\output.txt", mode='w',encoding='utf-8') as f:
+        f.writelines(output_text)
+    print("SUCCESS")
 def AlternateListChange(data):
     even = data[0::2]
     odd = data[1::2]

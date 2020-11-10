@@ -41,3 +41,7 @@ python main.py
 ## MeCab
 
 MeCab の辞書に、NEologd を使用してます。
+
+## Works Cited
+
+[Keras で実装する Seq2Seq 　－その１　日本語訓練データの準備](https://qiita.com/gacky01/items/26cd642731e3eddde60d)
