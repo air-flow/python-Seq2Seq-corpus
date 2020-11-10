@@ -1,10 +1,10 @@
 import pprint
 import re
 path = 'C:\\Users\\kiryu\\Desktop\\tuji\\textdata\\nucc\\'
-
+file = path+'data005.txt'
 def DataText(path):
     result_list = []
-    with open(path+'data005.txt',"r",encoding="utf-8") as f:
+    with open(file,"r",encoding="utf-8") as f:
         l = f.readlines()
     return l
 
@@ -21,6 +21,7 @@ def MatchMember(parameter_list):
 
 def BracketHittingEachOtherDeletion(text):
     return re.sub("[（）]", "", text)
+
 
 def BracketMovementDeletion(text):
     return re.sub("[＜＞]", "", text)
@@ -40,6 +41,11 @@ def DeleteTextOpesion(text):
     all =  BracketFuriganaDeletion(BracketMovementDeletion(hitting_each_other))
     return all
 
+def MeCabWakatigaki(text):
+    m = MeCab.Tagger("-Owakati")
+    return m.parse(text)
+
+
 def NameDelete(text):
     index = text.find("：")
     return text[index+1:]
@@ -56,9 +62,26 @@ def UnionText(data):
             result[-1] = result[-1]+temp
         index+=1
     return result
+
+def WriteTextInFile(data):
+    mecab_data = list(map(MeCabWakatigaki,data))
+    even,odd = AlternateListChange(mecab_data)
+    output_list = ["input","output"]
+    for i in range(len(mecab_data)-1):
+        input_text = mecab_data[i]
+        output_text = mecab_data[i+1]
+        with open(path+"", mode='w') as f:
+            f.writelines()
+
+def AlternateListChange(data):
+    even = data[0::2]
+    odd = data[1::2]
+    return even,odd
+    
 if __name__ == "__main__":
     data = DataText(path)
     # pprint.pprint(ldata))
     user_text = AttoMarkDelete(data)
     # pprint.pprint(AttoMarkDelete(data))
-    pprint.pprint(UnionText(user_text))
+    # pprint.pprint(UnionText(user_text))
+    # WriteTextInFile(UnionText(user_text))
