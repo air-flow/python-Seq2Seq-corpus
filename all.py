@@ -1,7 +1,8 @@
+import MeCab
 import pprint
 import re
 path = 'C:\\Users\\kiryu\\Desktop\\tuji\\textdata\\nucc\\'
-file = path+'data005.txt'
+file = path+'test.txt'
 def DataText(path):
     result_list = []
     with open(file,"r",encoding="utf-8") as f:
@@ -43,7 +44,7 @@ def DeleteTextOpesion(text):
 
 def MeCabWakatigaki(text):
     m = MeCab.Tagger("-Owakati")
-    return m.parse(text)
+    return m.parse(text).rstrip("\n")
 
 
 def NameDelete(text):
@@ -65,23 +66,25 @@ def UnionText(data):
 
 def WriteTextInFile(data):
     mecab_data = list(map(MeCabWakatigaki,data))
-    even,odd = AlternateListChange(mecab_data)
-    output_list = ["input","output"]
-    for i in range(len(mecab_data)-1):
-        input_text = mecab_data[i]
-        output_text = mecab_data[i+1]
-        with open(path+"", mode='w') as f:
-            f.writelines()
+    # even,odd = AlternateListChange(mecab_data)
+    # output_list = ["input","output"]
+    input_text = mecab_data[0:-1]
+    output_text = mecab_data[1:]
+    pprint.pprint(input_text)
+    pprint.pprint(output_text)
+    # with open(path+"", mode='w') as f:
+    #     f.writelines()
 
 def AlternateListChange(data):
     even = data[0::2]
     odd = data[1::2]
     return even,odd
-    
+
 if __name__ == "__main__":
     data = DataText(path)
     # pprint.pprint(ldata))
     user_text = AttoMarkDelete(data)
     # pprint.pprint(AttoMarkDelete(data))
     # pprint.pprint(UnionText(user_text))
-    # WriteTextInFile(UnionText(user_text))
+    temp =UnionText(user_text)
+    WriteTextInFile(temp)
