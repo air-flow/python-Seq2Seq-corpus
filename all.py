@@ -1,10 +1,11 @@
 import MeCab
 import pprint
 import re
-path = 'C:\\Users\\kiryu\\Desktop\\tuji\\textdata\\nucc\\'
-file = path+'data001.txt'
-def DataText(path):
-    result_list = []
+from frosch import hook
+import os
+path = 'C:\\Users\\kiryu\\Documents\\GitHub\\python-Seq2Seq-model\\nucc\\'
+# file = path+'data006.txt'
+def DataText(file):
     with open(file,"r",encoding="utf-8") as f:
         l = f.readlines()
     return l
@@ -55,6 +56,7 @@ def NameDelete(text):
 def UnionText(data):
     index = 0
     result = []
+    data = CheckFileHeadType(data)
     while index < len(data):
         temp = DeleteTextOpesion(data[index].rstrip("\n"))
         if MatchMember(temp):
@@ -65,6 +67,13 @@ def UnionText(data):
         index+=1
     return result
 
+def CheckFileHeadType(data):
+    if not MatchMember(data[0]):
+        for i,text in enumerate(data):
+            if MatchMember(text):
+                return data[i:]
+    return data
+
 def WriteTextInFile(data):
     mecab_data = list(map(MeCabWakatigaki,data))
     # even,odd = AlternateListChange(mecab_data)
@@ -72,9 +81,9 @@ def WriteTextInFile(data):
     # すべての文が発話文であり、かつ応答文であると解釈する
     input_text = mecab_data[0:-1]
     output_text = mecab_data[1:]
-    with open(path+"..//seq2seqtext\\input\\input.txt", mode='w',encoding='utf-8') as f:
+    with open("C:\\Users\\kiryu\\Documents\\GitHub\\python-Seq2Seq-model\\seq2seqtext\\input\\input.txt", mode='a',encoding='utf-8') as f:
         f.writelines(input_text)
-    with open(path+"..//seq2seqtext\\output\\output.txt", mode='w',encoding='utf-8') as f:
+    with open("C:\\Users\\kiryu\\Documents\\GitHub\\python-Seq2Seq-model\\seq2seqtext\\output\\output.txt", mode='a',encoding='utf-8') as f:
         f.writelines(output_text)
     print("SUCCESS")
 def AlternateListChange(data):
@@ -82,11 +91,30 @@ def AlternateListChange(data):
     odd = data[1::2]
     return even,odd
 
+def GetFileName():
+    files = os.listdir(path)
+    file = [f for f in files if os.path.isfile(os.path.join(path, f))]
+    return file
+
 if __name__ == "__main__":
-    data = DataText(path)
-    # pprint.pprint(ldata))
-    user_text = AttoMarkDelete(data)
-    # pprint.pprint(AttoMarkDelete(data))
-    # pprint.pprint(UnionText(user_text))
-    temp =UnionText(user_text)
-    WriteTextInFile(temp)
+    # data = DataText()
+    # # pprint.pprint(ldata))
+    # user_text = AttoMarkDelete(data)
+    # # pprint.pprint(AttoMarkDelete(data))
+    # # pprint.pprint(UnionText(user_text))
+    # temp =UnionText(user_text)
+    # print(MatchMember(user_text[0]))
+    # pprint.pprint(CheckFileHeadType(user_text))
+    # WriteTextInFile(temp)
+    # hook()
+    flies = GetFileName()
+    pprint.pprint(flies)
+    # for i in flies:
+    #     print(i + "start")
+    #     data = DataText(path+i)
+    #     user_text = AttoMarkDelete(data)
+    #     temp =UnionText(user_text)
+    #     WriteTextInFile(temp)
+    #     print(i + "end")
+    # a = 1
+    # a.append(1)
