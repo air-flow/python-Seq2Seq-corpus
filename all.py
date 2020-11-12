@@ -1,10 +1,8 @@
 import MeCab
 import pprint
 import re
-from frosch import hook
 import os
-path = 'C:\\Users\\kiryu\\Documents\\GitHub\\python-Seq2Seq-model\\nucc\\'
-# file = path+'data006.txt'
+path = 'python-Seq2Seq-model\\nucc\\'
 def DataText(file):
     with open(file,"r",encoding="utf-8") as f:
         l = f.readlines()
@@ -81,9 +79,9 @@ def WriteTextInFile(data):
     # すべての文が発話文であり、かつ応答文であると解釈する
     input_text = mecab_data[0:-1]
     output_text = mecab_data[1:]
-    with open("C:\\Users\\kiryu\\Documents\\GitHub\\python-Seq2Seq-model\\seq2seqtext\\input\\input.txt", mode='a',encoding='utf-8') as f:
+    with open("python-Seq2Seq-model\\seq2seqtext\\input\\input.txt", mode='a',encoding='utf-8') as f:
         f.writelines(input_text)
-    with open("C:\\Users\\kiryu\\Documents\\GitHub\\python-Seq2Seq-model\\seq2seqtext\\output\\output.txt", mode='a',encoding='utf-8') as f:
+    with open("python-Seq2Seq-model\\seq2seqtext\\output\\output.txt", mode='a',encoding='utf-8') as f:
         f.writelines(output_text)
     print("SUCCESS")
 def AlternateListChange(data):
@@ -96,25 +94,20 @@ def GetFileName():
     file = [f for f in files if os.path.isfile(os.path.join(path, f))]
     return file
 
+def main():
+    files = GetFileName()
+    for i in len(files) -1 :
+        print(files[i] + "start")
+        data = DataText(path+files[i])
+        user_text = AttoMarkDelete(data)
+        temp =UnionText(user_text)
+        WriteTextInFile(temp)
+        print(files[i] + "end")
+
+def CountFileColumn():
+    print(sum([1 for _ in open('python-Seq2Seq-model\\seq2seqtext\\input\\input.txt',encoding="utf-8")]))
+    print(sum([1 for _ in open('python-Seq2Seq-model\\seq2seqtext\\output\\output.txt',encoding="utf-8")]))
 if __name__ == "__main__":
-    # data = DataText()
-    # # pprint.pprint(ldata))
-    # user_text = AttoMarkDelete(data)
-    # # pprint.pprint(AttoMarkDelete(data))
-    # # pprint.pprint(UnionText(user_text))
-    # temp =UnionText(user_text)
-    # print(MatchMember(user_text[0]))
-    # pprint.pprint(CheckFileHeadType(user_text))
-    # WriteTextInFile(temp)
-    # hook()
-    flies = GetFileName()
-    pprint.pprint(flies)
-    # for i in flies:
-    #     print(i + "start")
-    #     data = DataText(path+i)
-    #     user_text = AttoMarkDelete(data)
-    #     temp =UnionText(user_text)
-    #     WriteTextInFile(temp)
-    #     print(i + "end")
-    # a = 1
-    # a.append(1)
+    # main()
+    # CountFileColumn()
+    pass
