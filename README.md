@@ -27,7 +27,7 @@ input, output ファイルにそれぞれわけて作成する。
 # Usage
 
 ```bash
-git clone https://github.com/air-flow/python-Seq2Seq-model.git
+git clone https://github.com/air-flow/python-Seq2Seq-corpus.git
 python main.py
 ```
 

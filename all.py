@@ -2,7 +2,7 @@ import MeCab
 import pprint
 import re
 import os
-path = 'python-Seq2Seq-model\\nucc\\'
+path = 'nucc\\'
 def DataText(file):
     with open(file,"r",encoding="utf-8") as f:
         l = f.readlines()
@@ -56,7 +56,7 @@ def UnionText(data):
     result = []
     data = CheckFileHeadType(data)
     while index < len(data):
-        temp = DeleteTextOpesion(data[index].rstrip("\n"))
+        temp = DeleteTextOpesion(data[index])
         if MatchMember(temp):
             name = NameDelete(temp)
             result.append(name)
@@ -73,15 +73,19 @@ def CheckFileHeadType(data):
     return data
 
 def WriteTextInFile(data):
-    mecab_data = list(map(MeCabWakatigaki,data))
+    # mecab_data = list(map(MeCabWakatigaki,data))
     # even,odd = AlternateListChange(mecab_data)
     # output_list = ["input","output"]
     # すべての文が発話文であり、かつ応答文であると解釈する
-    input_text = mecab_data[0:-1]
-    output_text = mecab_data[1:]
-    with open("python-Seq2Seq-model\\seq2seqtext\\input\\input.txt", mode='a',encoding='utf-8') as f:
+    # input_text = mecab_data[0:-1]
+    # output_text = mecab_data[1:]
+    input_text = data[0:-1]
+    output_text = data[1:]
+    # print(input_text)
+    # print(output_text)
+    with open("C:\\Users\\kiryu\\Documents\\GitHub\\python-seq2seq-model\\mine\\data\\input\\input.txt", mode='a',encoding='utf-8') as f:
         f.writelines(input_text)
-    with open("python-Seq2Seq-model\\seq2seqtext\\output\\output.txt", mode='a',encoding='utf-8') as f:
+    with open("C:\\Users\\kiryu\\Documents\\GitHub\\python-seq2seq-model\\mine\\data\\output\\output.txt", mode='a',encoding='utf-8') as f:
         f.writelines(output_text)
     print("SUCCESS")
 def AlternateListChange(data):
@@ -95,19 +99,19 @@ def GetFileName():
     return file
 
 def main():
-    files = GetFileName()
-    for i in len(files) -1 :
-        print(files[i] + "start")
-        data = DataText(path+files[i])
-        user_text = AttoMarkDelete(data)
-        temp =UnionText(user_text)
-        WriteTextInFile(temp)
-        print(files[i] + "end")
+    # files = GetFileName()
+    # for i in len(files) -1 :
+    # print(files[i] + "start")
+    data = DataText(path+"data005.txt")
+    user_text = AttoMarkDelete(data)
+    temp =UnionText(user_text)
+    # pprint.pprint(temp)
+    WriteTextInFile(temp)
+    # print(files[i] + "end")
 
 def CountFileColumn():
     print(sum([1 for _ in open('python-Seq2Seq-model\\seq2seqtext\\input\\input.txt',encoding="utf-8")]))
     print(sum([1 for _ in open('python-Seq2Seq-model\\seq2seqtext\\output\\output.txt',encoding="utf-8")]))
 if __name__ == "__main__":
-    # main()
+    main()
     # CountFileColumn()
-    pass
