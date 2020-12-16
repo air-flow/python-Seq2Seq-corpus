@@ -1,2 +1,4 @@
-/vscode/
-/nucc/
+/vscode
+/.vscode*
+/mine
+*.pyc
