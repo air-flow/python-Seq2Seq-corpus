@@ -2,6 +2,8 @@ import pprint
 import codecs
 import glob
 import io
+import os
+
 def GetFileContens(file_name):
     l = None
     with open(file_name,encoding='utf-8',mode='r') as target:
@@ -46,7 +48,7 @@ def EncodeFile():
             print(identifier,shiftjis_csv_path)
 def main(file_name):
     file = GetFileContens(file_name)
-    text_list =[i for i in list(map(DeleteSpace,file)) if i != False]
+    text_list =[i for i in list(map(DeleteParentheses,file)) if i != False]
     # pprint.pprint(text_list)
     SetFileContens(text_list,file_name)
 
@@ -59,12 +61,15 @@ def FileList():
             # print(file)
     return result
 
+def cd():
+    os.chdir(os.path.dirname(__file__))
 
 if __name__ == "__main__":
+    cd()
     # FileList()
     # EncodeFile()
     file_list = FileList()
+    # print(file_list)
     for i in file_list:
-        if "2734" in i:
+        if "6840" in i:
             main(i)
-    pass
